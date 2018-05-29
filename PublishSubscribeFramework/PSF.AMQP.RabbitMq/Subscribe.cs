@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using PSF.Interfaces;
+using PSF.AMQP.Interfaces;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
@@ -11,6 +11,12 @@ using System.Text;
 
 namespace PSF.AMQP.RabbitMq
 {
+
+    /// <summary>
+    /// The Subscribe is the Receiver object. It create a listener for when to receive a message on an open topic/queue, it start a callback method
+    /// </summary>
+    /// <typeparam name="IRequest">Here you set a Request interface what is on your code or in other library</typeparam>
+    /// <typeparam name="INotification">Here you set a Notification interface what is on your code or in other library</typeparam>
     public class Subscribe<IRequest, INotification> : ISubscribe<IRequest, INotification>, IDisposable
     {
         private const string argType = "topic";
@@ -26,6 +32,18 @@ namespace PSF.AMQP.RabbitMq
 
         private readonly Dictionary<Type, string> messageTypeAddresses = new Dictionary<Type, string>();
 
+
+        /// <summary>
+        /// Constructor Method
+        /// </summary>
+        /// <param name="assemblyBase">type of a object from your library for to read the assembly and to find all other classes that use the Request or Notification interface informed</param>
+        /// <param name="topicName">Topic Name</param>
+        /// <param name="hostname">Host name of your RabbitMQ</param>
+        /// <param name="port">Port of your host (is optional)</param>
+        /// <param name="userName">User Name for connect in your host (is optional)</param>
+        /// <param name="password">Password of User for connect in your host (is optional)</param>
+        /// <param name="virtualhost">Virtual Host address (is optional)</param>
+        /// <param name="subscriptionName">Subscription Name (is optional)</param>
         public Subscribe(Type assemblyBase, string topicName, string hostname,  int? port = null, string userName = null, string password = null, string virtualhost = null, string subscriptionName = null)
         {
             this.Exchange = topicName;
@@ -78,6 +96,9 @@ namespace PSF.AMQP.RabbitMq
             return messageResult;
         }
 
+        /// <summary>
+        /// Dispose method
+        /// </summary>
         public void Dispose()
         {
             if(this.channels.Count > 0)
@@ -99,6 +120,10 @@ namespace PSF.AMQP.RabbitMq
             }
         }
 
+        /// <summary>
+        /// This method create a listener and define a callback method for when to receive a message
+        /// </summary>
+        /// <param name="callback">Callback method delegate</param>
         public void OnMessage(Action<object> callback)
         {
             var channel = this.connection.CreateModel();

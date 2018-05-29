@@ -6,10 +6,15 @@ using System.Reflection;
 using Newtonsoft.Json;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
-using PSF.Interfaces;
+using PSF.AMQP.Interfaces;
 
 namespace PSF.AMQP.AzureServiceBus
 {
+    /// <summary>
+    /// The Subscribe is the Receiver object. It create a listener for when to receive a message on an open topic/queue, it start a callback method
+    /// </summary>
+    /// <typeparam name="IRequest">Here you set a Request interface what is on your code or in other library</typeparam>
+    /// <typeparam name="INotification">Here you set a Notification interface what is on your code or in other library</typeparam>
     public class Subscribe<IRequest, INotification> : ISubscribe<IRequest, INotification>
     {
 
@@ -19,6 +24,14 @@ namespace PSF.AMQP.AzureServiceBus
         private readonly string topicName;
         private readonly string subbscriptionName;
 
+
+        /// <summary>
+        /// Constructor Methdo
+        /// </summary>
+        /// <param name="assemblyBase">type of a object from your library for to read the assembly and to find all other classes that use the Request or Notification interface informed</param>
+        /// <param name="connectionString">Connection string of your Azure ServiceBus</param>
+        /// <param name="topicName">Topic Name</param>
+        /// <param name="subscriptionName">Subscription Name</param>
         public Subscribe(Type assemblyBase, String connectionString, String topicName, String subscriptionName)
         {
 
@@ -47,6 +60,10 @@ namespace PSF.AMQP.AzureServiceBus
 
         }
 
+        /// <summary>
+        /// This method create a listener and define a callback method for when to receive a message
+        /// </summary>
+        /// <param name="callback">Callback method delegate</param>
         public void OnMessage(Action<dynamic> callback)
         {
             this.subscriptionClient.OnMessage(message => callback.Invoke(Deserialize(message)));

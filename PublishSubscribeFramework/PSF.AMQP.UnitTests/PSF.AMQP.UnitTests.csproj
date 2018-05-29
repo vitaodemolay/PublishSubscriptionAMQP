@@ -54,6 +54,15 @@
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PSF.AMQP.AzureServiceBus, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VMRCPACK.PublishSubscribe.AzureServiceBus.1.0.0\lib\net461\PSF.AMQP.AzureServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="PSF.AMQP.Interfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VMRCPACK.PublishSubscribe.Interfaces.1.0.0\lib\netstandard2.0\PSF.AMQP.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="PSF.AMQP.RabbitMq, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VMRCPACK.PublishSubscribe.RabbitMQ.1.0.0\lib\netstandard2.0\PSF.AMQP.RabbitMq.dll</HintPath>
+    </Reference>
     <Reference Include="RabbitMQ.Client, Version=5.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
       <HintPath>..\packages\RabbitMQ.Client.5.0.1\lib\net451\RabbitMQ.Client.dll</HintPath>
     </Reference>
@@ -70,16 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PSF.AMQP.AzureServiceBus\PSF.AMQP.AzureServiceBus.csproj">
-      <Project>{f85c6d49-be6e-45e2-a7d2-1ccd332c1aaa}</Project>
-      <Name>PSF.AMQP.AzureServiceBus</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PSF.AMQP.RabbitMq\PSF.AMQP.RabbitMq.csproj">
-      <Project>{8F650659-61EC-4245-8EB3-BE34C5B7A005}</Project>
-      <Name>PSF.AMQP.RabbitMq</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using PSF.Interfaces;
+using PSF.AMQP.Interfaces;
 using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace PSF.AMQP.RabbitMq
 {
+    /// <summary>
+    /// The Publish is the Sender Object.  It have two methods for send the message for topic/queue on RabbitMQ Host 
+    /// </summary>
     public class Publish : IPublish
     {
         private const string argType = "topic";
@@ -27,6 +30,15 @@ namespace PSF.AMQP.RabbitMq
         private string Exchange { get; }
         private IDictionary<string, object> args { get; }
 
+        /// <summary>
+        /// Constructor Method
+        /// </summary>
+        /// <param name="topicName">Topic Name</param>
+        /// <param name="hostname">Host name of your RabbitMQ</param>
+        /// <param name="port">Port of your host (is optional)</param>
+        /// <param name="userName">User Name for connect in your host (is optional)</param>
+        /// <param name="password">Password of User for connect in your host (is optional)</param>
+        /// <param name="virtualhost">Virtual Host address (is optional)</param>
         public Publish(string topicName, string hostname, int? port = null, string userName = null, string password = null, string virtualhost = null)
         {
             this.Exchange = topicName;
@@ -54,6 +66,9 @@ namespace PSF.AMQP.RabbitMq
             this.connection = factory.CreateConnection();
         }
 
+        /// <summary>
+        /// Dispose Method
+        /// </summary>
         public void Dispose()
         {
             if (this.connection != null)
@@ -65,6 +80,13 @@ namespace PSF.AMQP.RabbitMq
             }
         }
 
+        /// <summary>
+        /// The send method serialize the message object, mark this with configurations of expire and schedule delivery and send this for topic/queue;
+        /// </summary>
+        /// <typeparam name="T">Message Type</typeparam>
+        /// <param name="message">Message object for to send</param>
+        /// <param name="expireMessage">Expiration date</param>
+        /// <param name="scheduleDelivery">Schedule Delivery date (delivery with delay)</param>
         public void Send<T>(T message, DateTime? expireMessage = null, DateTime? scheduleDelivery = null)
         {
             using (var channel = connection.CreateModel())
@@ -78,6 +100,14 @@ namespace PSF.AMQP.RabbitMq
             }
         }
 
+
+        /// <summary>
+        /// The send async method serialize the message object, mark this with configurations of expire and schedule delivery and send this for topic/queue;
+        /// </summary>
+        /// <typeparam name="T">Message Type</typeparam>
+        /// <param name="message">Message object for to send</param>
+        /// <param name="expireMessage">Expiration date</param>
+        /// <param name="scheduleDelivery">Schedule Delivery date (delivery with delay)</param>
         public Task SendAsync<T>(T message, DateTime? expireMessage = null, DateTime? scheduleDelivery = null)
         {
             var t = new Task(() => this.Send(message, expireMessage, scheduleDelivery));

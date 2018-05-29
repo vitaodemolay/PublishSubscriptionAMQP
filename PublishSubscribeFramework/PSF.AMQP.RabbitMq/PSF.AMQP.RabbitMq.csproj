@@ -1,7 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard2.0\PSF.AMQP.RabbitMq.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PSF.AMQP.Interfaces\PSF.AMQP.Interfaces.csproj" />
+    <PackageReference Include="VMRCPACK.PublishSubscribe.Interfaces" Version="1.0.0" />
   </ItemGroup>
 
 </Project>

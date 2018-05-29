@@ -2,6 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <ApplicationIcon />
+    <Win32Resource />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard2.0\PSF.AMQP.Interfaces.xml</DocumentationFile>
   </PropertyGroup>
 
 </Project>
