@@ -10,7 +10,9 @@ It have a separeted project with two Interfaces for you easily apply Dependecy i
 1.	Installation library
 	You need to install / Add this library in your project application. 
 	
-	(For now you need build this project and add manually the dll in your project. Later I will make a nugget repository and update this document.)
+	* [VMRCPACK.PublishSubscribe.Interfaces](https://www.nuget.org/packages/VMRCPACK.PublishSubscribe.Interfaces/) - Nuget Pack with Interface project. Used for Dependency Injection.
+	* [VMRCPACK.PublishSubscribe.AzureServiceBus](https://www.nuget.org/packages/VMRCPACK.PublishSubscribe.AzureServiceBus/) - Nuget PAck with project focused on Azure ServiceBus implementation. 
+	* [VMRCPACK.PublishSubscribe.RabbitMQ](https://www.nuget.org/packages/VMRCPACK.PublishSubscribe.RabbitMQ/) - Nuget Pack with project focused on RabbitMQ implementation.
 	
 	
 2.	Dependencies
